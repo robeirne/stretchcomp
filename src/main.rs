@@ -6,6 +6,7 @@ extern crate clap;
 use image::GenericImage;
 
 fn validate_file(file: &str) -> bool {
+    // TODO: Add more validations like format, color, etc.
     if std::path::Path::new(file).is_file()
     {
         return true;
@@ -20,12 +21,13 @@ fn main() {
         (version: crate_version!())
         (author: crate_authors!())
         (about: crate_description!())
-        (@arg widthscale: -w --width +takes_value +required "Specify width scaling percentage.")
-        (@arg heightscale: -h --height +takes_value +required "Specify height scaling percentage.")
+        (@arg widthscale: -x --width +takes_value +required "Specify width scaling percentage on a scale from 0-100 (e.g. 105.")
+        (@arg heightscale: -y --height +takes_value +required "Specify height scaling percentage on a scale from 0-100 (e.g. 105.")
         (@arg INPUTFILE: +required +multiple "Specify input file name(s).")
         (@arg OUTPUTFILE: -o --outputfile +takes_value "Specify output file name. May only be used with single file input")
     ).get_matches();
 
+    // Collect arguments as variables
     let input_files: Vec<&str> = matches.values_of("INPUTFILE").unwrap().collect();
     let scale_w: f32 = matches.value_of("widthscale").unwrap().parse().unwrap();
     let scale_h: f32 = matches.value_of("heightscale").unwrap().parse().unwrap();
@@ -38,6 +40,7 @@ fn main() {
         }
     }
 
+    // Loop through valid files and scale the images
     for valid_file in valid_files.iter() {
         let out: String = matches.value_of("OUTPUTFILE").unwrap_or(&format!("{}_pp.jpg", valid_file)).parse().unwrap();
         let img = image::open(valid_file).unwrap();
