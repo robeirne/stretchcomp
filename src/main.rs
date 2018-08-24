@@ -21,8 +21,8 @@ fn main() {
         (version: crate_version!())
         (author: crate_authors!())
         (about: crate_description!())
-        (@arg widthscale: -x --width +takes_value +required "Specify width scaling percentage on a scale from 0-100 (e.g. 105.")
-        (@arg heightscale: -y --height +takes_value +required "Specify height scaling percentage on a scale from 0-100 (e.g. 105.")
+        (@arg widthscale: -x --width +takes_value +required "Specify width scaling percentage on a scale from 0-100 (e.g. 105).")
+        (@arg heightscale: -y --height +takes_value +required "Specify height scaling percentage on a scale from 0-100 (e.g. 105).")
         (@arg INPUTFILE: +required +multiple "Specify input file name(s).")
         (@arg OUTPUTFILE: -o --outputfile +takes_value "Specify output file name. May only be used with single file input")
     ).get_matches();
