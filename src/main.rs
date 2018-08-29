@@ -20,20 +20,17 @@ fn validate_file(file: &str) -> bool {
 fn get_output_name(input_path: &Path, dir: &str, file: &str) -> PathBuf {
     let mut output_file = PathBuf::new();
 
-    if dir.len() == 0 && file.len() == 0 {
-        // Output to CWD if none is specified by args
+    // Use specified directory if specified by output
+    if dir.len() > 0 {
+        output_file.push(PathBuf::from(dir));
+    }
+    
+    // Use file name if specified by args
+    if file.len() > 0 {
+        output_file.push(PathBuf::from(file));
+    } else {
         output_file.push(input_path.file_name().unwrap());
         output_file.set_extension("jpg");
-    } else if dir.len() > 0 || file.len() > 0 {
-        // Or use specified dir/file
-        let dir_path = PathBuf::from(dir);
-        let file_path = PathBuf::from(file);
-        output_file.push(dir_path);
-        output_file.push(file_path);
-        if file.len() == 0 {
-            output_file.push(input_path.file_name().unwrap());
-            output_file.set_extension("jpg");
-        }
     }
 
     // Make output directory if it doesn't exist
